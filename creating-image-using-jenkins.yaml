@@ -1,0 +1,33 @@
+
+
+
+    # download jenkins as image
+    docker-pull-jenkins:
+        command: >
+            docker pull jenkins
+            docke run --name jenkins -p 8080:8080 jenkins
+            - run the image
+            - now follow the instructions
+            - copy the temp password    
+            - login to web console
+    #==========================================
+    
+    # docker building image using jenkins job
+    build-image-using-jenkins-jobs:>
+        command: docker build \
+                -f Dockerfile \
+                --pull --no-cache --force-rm \
+                -t %env.DOCKER_IMAGE_NAME% \
+                --build-arg ARTIFACT_PATH=%env.WAR_ARTIFACT_PATH% \
+                --label="hello-world-v2" .
+                
+    # docker image tagging
+    tag-image:>
+        docker tag hello-world-v2 docker.com/docker-hub/samples/%env.DOCKER_IMAGE_NAME%:v2
+        docker tag hello-world-v2 docker.com/docker-hub/samples/%env.DOCKER_IMAGE_NAME%:test
+
+    # docker image push
+    docker-push: >
+        docker push docker.com/docker-hub/samples/%env.DOCKER_IMAGE_NAME%:v2
+        docker push hello-world-v2 docker.com/docker-hub/samples/%env.DOCKER_IMAGE_NAME%:test
+        docker rmi --force hello-world-v2 docker.com/docker-hub/samples/%env.DOCKER_IMAGE_NAME%:test
