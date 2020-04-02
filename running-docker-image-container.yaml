@@ -1,0 +1,50 @@
+
+
+    #start image
+    start-image:
+        command 1: 
+            - docker run --name helloworld -i -d --env-file env.list -v /tmp/helloworld/logs:/opt/logs -v /tmp/helloworld/logs:/opt/apache-tomee-plus-1.7.1/logs image-name-helloworld /bin/bash
+            - run interactively using env.list as environment variables
+            - attach 2 volumes
+            - run image-name-helloworld and attach /bin/bash
+        command 2: 
+            - docker run  --name image-name-helloworld -i -d --env-file env.list image-name-helloworld
+            
+    #=======================================================================================================
+
+    #running image by passing environment variables one by one
+    list-images:
+        command:>
+            docker images
+   
+    #============================================================
+
+    # docker pull latest postgres image
+    # https://hub.docker.com/_/postgres
+    
+    pull image: 
+        command: >
+            docker pull postgres
+
+    #running locally
+    # -d for detach mode run
+    run-image-command: >
+        docker run -p 5432:5432 \
+        --name postgres-local01 \
+        --env POSTGRESQL_DATABASE=emps \
+        --env POSTGRESQL_PASSWORD=test \
+        <postgres-image-id>
+
+    #attach container
+    attach-to-container:
+        command: docker exec -it <container name> /bin/bash
+        example: docker exec -it f97s3fc2e4a3 /bin/bash
+        issue:>
+            some time, windows tty issue may come. for that google and try way which works
+            for windows 10
+
+    #forcefully close any process/container
+    kill-container:
+        command: >
+            docker container ls -a | grep -i release
+            docker container rm cc3f2ff51csds cd20b396ass1
