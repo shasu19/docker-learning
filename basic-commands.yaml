@@ -1,0 +1,41 @@
+
+
+
+        # pulling an image from docker image hub
+        pull-image:
+            command: docker pull <image_name>
+            example:
+                - docker pull helloworld
+                - docker pull docker-complete-registry.com/image-name:image-tag
+
+        #========================================================================================
+
+        # tagging an image and pushing to docker hub repository
+        tag-local-image:
+            command: docker tag <image-id-or-name> <image-repository>:<new-tag>
+            example: docker tag 06513e644479 docker-local.artifactory.com/sample/v2/helloworld:2
+            pushing later this new tag image: 
+                command: docker push <new-tagged-image>
+                exmaple: docker push docker-local.artifactory.com/sample/v2/helloworld:2
+                
+        #========================================================================================
+    
+        #listing local images
+        list-images:
+            command1: docker image ls
+            command2: docker images
+            
+        # remove some image from local
+        remove-docker-image:
+            command: docker rmi <image-id>
+        
+        # docker running process or image containers
+        running-containers:
+            command: docker ps -a
+            
+        #========================================================================================
+        
+        
+
+
+
